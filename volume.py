@@ -8,29 +8,31 @@ import math
 #Главное окно.
 window = Tk()
 window.title('V - Калькулятор')
-
+mycolor = '#%02x%02x%02x' % (199, 199, 199)
+color_v = '#%02x%02x%02x' % (200, 66, 69)
+color_trhb = '#%02x%02x%02x' % (85, 170, 255)
 # первая метка в строке 0, столбце 0 (0 по умолчанию)
 # парамет sticky  означает выравнивание. W, E,N,S — запад, восток, север, юг
-Label(window, text='Значение m = ').grid(row=0, sticky=E)
+Label(window, text='m =').grid(row=0, sticky=E)
 
 # вторая метка в строке 1
-Label(window, text='Значение k1 = ').grid(row=1, sticky=E)
-Label(window, text='Значение preHb = ').grid(row=2, sticky=E)
-Label(window, text='Значение TrHb = ').grid(row=3, sticky=E)
-Label(window, text='Значение postHb = ').grid(row=4, sticky=E)
-Label(window, text='Значение preHct = ').grid(row=5, sticky=E)
-Label(window, text='Значение postHct = ').grid(row=6, sticky=E)
+Label(window, text='k1 =').grid(row=1, sticky=E)
+Label(window, text='preHb =').grid(row=2, sticky=E)
+Label(window, text='TrHb =').grid(row=3, sticky=E)
+Label(window, text='postHb =').grid(row=4, sticky=E)
+Label(window, text='preHct =').grid(row=5, sticky=E)
+Label(window, text='postHct =').grid(row=6, sticky=E)
 
 
 # создаем виджеты текстовых полей
-Entry_m = Entry(window, width=10, font='Arial 16')
-Entry_k1 = Entry(window, width=10, font='Arial 16')
-Entry_preHb = Entry(window, width=10, font='Arial 16')
-Entry_TrHb = Entry(window, width=10, font='Arial 16')
-Entry_postHb = Entry(window, width=10, font='Arial 16')
-Entry_preHct = Entry(window, width=10, font='Arial 16')
-Entry_postHct = Entry(window, width=10, font='Arial 16')
-EntryRes = Entry(window, width=20, font='Arial 16')
+Entry_m = Entry(window, width=10, font='Arial 16', bg=mycolor)
+Entry_k1 = Entry(window, width=10, font='Arial 16', bg=mycolor)
+Entry_preHb = Entry(window, width=10, font='Arial 16', bg=mycolor)
+Entry_TrHb = Entry(window, width=10, font='Arial 16', bg=mycolor)
+Entry_postHb = Entry(window, width=10, font='Arial 16', bg=mycolor)
+Entry_preHct = Entry(window, width=10, font='Arial 16', bg=mycolor)
+Entry_postHct = Entry(window, width=10, font='Arial 16', bg=mycolor)
+EntryRes = Entry(window, width=20, font='Arial 16', bg=mycolor)
 
 # размещаем первые два поля справа от меток, второй столбец (отсчет от нуля)
 Entry_m.grid(row=0, column=1, sticky=E)
@@ -46,8 +48,7 @@ Entry_postHct.grid(row=6, column=1, sticky=E)
 EntryRes.grid(row=9, columnspan=2)
 
 # обработчик события для кнопки Рассчитать V
-def proizv():
-    KML: float = 0.001 
+def get_volume():
 
     m = Entry_m.get() # берем текст из первого поля
     m = int(m) # преобразуем в число целого типа
@@ -59,7 +60,7 @@ def proizv():
     preHb = float(preHb)
 
     TrHb = Entry_TrHb.get() 
-    TrHb = float(TrHb) # тут нужна проверка if Entry_TrHb.get() = "" or "0": TrHb = 0 else: TrHb = метод
+    TrHb = float(TrHb)
 
     postHb = Entry_postHb.get() 
     postHb = float(postHb)
@@ -69,16 +70,15 @@ def proizv():
     
     postHct = Entry_postHct.get() 
     postHct = float(postHct)
-
-    result_hb = (postHb * math.sqrt(preHct / postHct)) / preHb # Получить дробь Hb
-    result_vol = str(int(m * k1 * KML * preHb + TrHb - result_hb)) # результат переведем в строку для дальнейшего вывода
+    
+    result_vol = str(int(m * k1 * ((preHb + TrHb - (postHb * math.sqrt(preHct / postHct))) / preHb))) # результат переведем в строку для дальнейшего вывода
     
     EntryRes.delete(0, END) # очищаем текстовое поле полностью
     EntryRes.insert(0, result_vol) # вставляем результат в начало 
 
 
 # размещаем кнопку в строке 10 во втором столбце 
-but = Button(window, text='Рассчитать V', command=proizv)
+but = Button(window, text='   Рассчитать V   ', bg=color_v, command=get_volume)
 but.grid(row=10, column=0, sticky=W)
 
 
@@ -87,20 +87,20 @@ def open_TrHb():
     TrHb_window = Toplevel(window)
     TrHb_window.title('TrHb')
     
-    Label(TrHb_window, text='Значение Vtr = ').grid(row=0, sticky=E)
-    Label(TrHb_window, text='Значение k2 = ').grid(row=1, sticky=E)
-    Label(TrHb_window, text='Значение m = ').grid(row=2, sticky=E)
-    Label(TrHb_window, text='Значение k1 = ').grid(row=3, sticky=E)
-    Label(TrHb_window, text='Значение preHct = ').grid(row=4, sticky=E)
-    Label(TrHb_window, text='Значение postHct = ').grid(row=5, sticky=E)
+    Label(TrHb_window, text='Vtr =').grid(row=0, sticky=E)
+    Label(TrHb_window, text='k2 =').grid(row=1, sticky=E)
+    Label(TrHb_window, text='m =').grid(row=2, sticky=E)
+    Label(TrHb_window, text='k1 =').grid(row=3, sticky=E)
+    Label(TrHb_window, text='preHct =').grid(row=4, sticky=E)
+    Label(TrHb_window, text='postHct =').grid(row=5, sticky=E)
 
-    Entry_Vtr = Entry(TrHb_window, width=10, font='Arial 16')
-    Entry_k2 = Entry(TrHb_window, width=10, font='Arial 16')
-    Entry_m = Entry(TrHb_window, width=10, font='Arial 16')
-    Entry_k1 = Entry(TrHb_window, width=10, font='Arial 16')
-    Entry_preHct = Entry(TrHb_window, width=10, font='Arial 16')
-    Entry_postHct = Entry(TrHb_window, width=10, font='Arial 16')
-    EntryResTrHb = Entry(TrHb_window, width=20, font='Arial 16')
+    Entry_Vtr = Entry(TrHb_window, width=10, font='Arial 16', bg=mycolor)
+    Entry_k2 = Entry(TrHb_window, width=10, font='Arial 16', bg=mycolor)
+    Entry_m = Entry(TrHb_window, width=10, font='Arial 16', bg=mycolor)
+    Entry_k1 = Entry(TrHb_window, width=10, font='Arial 16', bg=mycolor)
+    Entry_preHct = Entry(TrHb_window, width=10, font='Arial 16', bg=mycolor)
+    Entry_postHct = Entry(TrHb_window, width=10, font='Arial 16', bg=mycolor)
+    EntryResTrHb = Entry(TrHb_window, width=20, font='Arial 16', bg=mycolor)
 
     Entry_Vtr.grid(row=0, column=1, sticky=E)
     Entry_k2.grid(row=1, column=1, sticky=E)
@@ -116,7 +116,7 @@ def open_TrHb():
         AVER_HB: int = 340
 
         Vtr = Entry_Vtr.get()
-        Vtr = int(Vtr)
+        Vtr = float(Vtr)
 
         k2 = Entry_k2.get() 
         k2 = float(k2)
@@ -139,10 +139,18 @@ def open_TrHb():
         EntryResTrHb.insert(0, result_TrHb) # вставляем результат в начало
         Entry_TrHb.insert(0, result_TrHb) # вставляем результат в поле TrHb 
 
-    but = Button(TrHb_window, text='Рассчитать TrHb', command=get_TrHb)
+    def clean_TrHb():
+            Entry_Vtr.delete(0, END)
+            Entry_k2.delete(0, END)
+            Entry_m.delete(0, END)
+            Entry_k1.delete(0, END)
+            Entry_preHct.delete(0, END)
+            Entry_postHct.delete(0, END)    
+
+    but = Button(TrHb_window, text='  Рассчитать TrHb  ',  bg=color_trhb, command=get_TrHb)
     but.grid(row=9, column=0, sticky=W)
 
-    but = Button(TrHb_window, text='Очистить')
+    but = Button(TrHb_window, text='   Очистить   ', command=clean_TrHb)
     but.grid(row=9, column=1, sticky=E)
 
     TrHb_window.mainloop()
@@ -157,11 +165,14 @@ def clean():
     Entry_postHct.delete(0, END)
 
 
-but = Button(window, text='Рассчитать TrHb', command=open_TrHb)
+but = Button(window, text='Рассчитать TrHb', bg=color_trhb, command=open_TrHb)
 but.grid(row=3, column=2, sticky=W)
 
-but = Button(window, text='Очистить', command=clean)
+but = Button(window, text='  Очистить  ', command=clean)
 but.grid(row=10, column=1, sticky=E)
+
+but = Button(window, text='doc', command=open_TrHb)
+but.grid(row=10, column=2, sticky=W)
 
 
 window.mainloop()
