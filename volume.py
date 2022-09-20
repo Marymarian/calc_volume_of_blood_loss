@@ -3,6 +3,7 @@ from tkinter import messagebox
 from tkinter import Frame
 import tkinter
 from turtle import width
+from textwrap import wrap
 import math
 
 #Главное окно.
@@ -10,12 +11,11 @@ window = Tk()
 window.title('V - Калькулятор')
 mycolor = '#%02x%02x%02x' % (199, 199, 199)
 color_v = '#%02x%02x%02x' % (200, 66, 69)
+color_v_foc = '#%02x%02x%02x' % (236, 78, 83)
 color_trhb = '#%02x%02x%02x' % (85, 170, 255)
-# первая метка в строке 0, столбце 0 (0 по умолчанию)
-# парамет sticky  означает выравнивание. W, E,N,S — запад, восток, север, юг
-Label(window, text='m =').grid(row=0, sticky=E)
 
-# вторая метка в строке 1
+# Парамет sticky  означает выравнивание. W, E,N,S — запад, восток, север, юг.
+Label(window, text='m =').grid(row=0, sticky=E)
 Label(window, text='k1 =').grid(row=1, sticky=E)
 Label(window, text='preHb =').grid(row=2, sticky=E)
 Label(window, text='TrHb =').grid(row=3, sticky=E)
@@ -23,8 +23,7 @@ Label(window, text='postHb =').grid(row=4, sticky=E)
 Label(window, text='preHct =').grid(row=5, sticky=E)
 Label(window, text='postHct =').grid(row=6, sticky=E)
 
-
-# создаем виджеты текстовых полей
+# Виджеты текстовых полей.
 Entry_m = Entry(window, width=10, font='Arial 16', bg=mycolor)
 Entry_k1 = Entry(window, width=10, font='Arial 16', bg=mycolor)
 Entry_preHb = Entry(window, width=10, font='Arial 16', bg=mycolor)
@@ -34,7 +33,7 @@ Entry_preHct = Entry(window, width=10, font='Arial 16', bg=mycolor)
 Entry_postHct = Entry(window, width=10, font='Arial 16', bg=mycolor)
 EntryRes = Entry(window, width=20, font='Arial 16', bg=mycolor)
 
-# размещаем первые два поля справа от меток, второй столбец (отсчет от нуля)
+# Выравнивание по сетке.
 Entry_m.grid(row=0, column=1, sticky=E)
 Entry_k1.grid(row=1, column=1, sticky=E)
 Entry_preHb.grid(row=2, column=1, sticky=E)
@@ -43,44 +42,22 @@ Entry_postHb.grid(row=4, column=1, sticky=E)
 Entry_preHct.grid(row=5, column=1, sticky=E)
 Entry_postHct.grid(row=6, column=1, sticky=E)
 
-# третье текстовое поле ввода занимает всю ширину строки 2
 # columnspan — объединение ячеек по столбцам; rowspan — по строкам
 EntryRes.grid(row=9, columnspan=2)
 
-# обработчик события для кнопки Рассчитать V
+# Обработчик события для кнопки Рассчитать V.
 def get_volume():
-
-    m = Entry_m.get() # берем текст из первого поля
-    m = int(m) # преобразуем в число целого типа
-
-    k1 = Entry_k1.get() 
-    k1 = int(k1)
-    
-    preHb = Entry_preHb.get() 
-    preHb = float(preHb)
-
-    TrHb = Entry_TrHb.get() 
-    TrHb = float(TrHb)
-
-    postHb = Entry_postHb.get() 
-    postHb = float(postHb)
-
-    preHct = Entry_preHct.get() 
-    preHct = float(preHct)
-    
-    postHct = Entry_postHct.get() 
-    postHct = float(postHct)
-    
+    m = int(Entry_m.get()) # Преобразуем текст из первого поля в число.
+    k1 = int(Entry_k1.get()) 
+    preHb = float(Entry_preHb.get()) 
+    TrHb = float(Entry_TrHb.get()) 
+    postHb = float(Entry_postHb.get()) 
+    preHct = float(Entry_preHct.get()) 
+    postHct = float(Entry_postHct.get()) 
     result_vol = str(int(m * k1 * ((preHb + TrHb - (postHb * math.sqrt(preHct / postHct))) / preHb))) # результат переведем в строку для дальнейшего вывода
     
-    EntryRes.delete(0, END) # очищаем текстовое поле полностью
-    EntryRes.insert(0, result_vol) # вставляем результат в начало 
-
-
-# размещаем кнопку в строке 10 во втором столбце 
-but = Button(window, text='   Рассчитать V   ', bg=color_v, command=get_volume)
-but.grid(row=10, column=0, sticky=W)
-
+    EntryRes.delete(0, END) # Оищаем текстовое поле полностью.
+    EntryRes.insert(0, result_vol) # Вставляем результат в начало.
 
 # обработчик для кнопки Рассчитать TrHb
 def open_TrHb():
@@ -115,29 +92,18 @@ def open_TrHb():
         KML: float = 0.001 
         AVER_HB: int = 340
 
-        Vtr = Entry_Vtr.get()
-        Vtr = float(Vtr)
-
-        k2 = Entry_k2.get() 
-        k2 = float(k2)
-        
-        m = Entry_m.get() 
-        m = int(m)
-
-        k1 = Entry_k1.get() 
-        k1 = int(k1)
-
-        preHct = Entry_preHct.get() 
-        preHct = float(preHct)
-        
-        postHct = Entry_postHct.get() 
-        postHct = float(postHct)
+        Vtr = float(Entry_Vtr.get())
+        k2 = float(Entry_k2.get()) 
+        m = int(Entry_m.get()) 
+        k1 = int(Entry_k1.get()) 
+        preHct = float(Entry_preHct.get()) 
+        postHct = float(Entry_postHct.get()) 
         
         result_TrHb = round((Vtr * AVER_HB * k2) / (m * KML * k1 * math.sqrt(preHct / postHct)), 1)
 
-        EntryResTrHb.delete(0, END) # очищаем поле полностью
-        EntryResTrHb.insert(0, result_TrHb) # вставляем результат в начало
-        Entry_TrHb.insert(0, result_TrHb) # вставляем результат в поле TrHb 
+        EntryResTrHb.delete(0, END)
+        EntryResTrHb.insert(0, result_TrHb)
+        Entry_TrHb.insert(0, result_TrHb) # Вставляем результат в поле TrHb. 
 
     def clean_TrHb():
             Entry_Vtr.delete(0, END)
@@ -164,6 +130,36 @@ def clean():
     Entry_preHct.delete(0, END)
     Entry_postHct.delete(0, END)
 
+def doc():
+    doc_window = Toplevel(window)
+    doc_window.title('Документация')
+    doc_window.geometry('500x300')
+    doc = (
+        'V – объем интраоперационной кровопотери в мл.\n'
+        'm – масса тела в кг.\n'
+        'k1 – коэффициент, соответствующий правилу Гилчера.\n'
+        '(у атлетичных мужчин на 1 килограмм веса приходится 75 мл крови,\n' 
+        'у нормостеничных – 70 мл, у астеничных – 65 мл, у мужчин с ожирением – 60 мл.\n' 
+        'У женщин используются несколько другие данные:\n'
+        'при атлетичном телосложении – 70 мл на килограмм веса,\n'
+        'при нормостеничном – 65 мл,\n'
+        'у астеничных – 60 мл, у женщин с ожирением – 55 мл).\n'
+        'preHb – концентрация гемоглобина в крови за 6-12 часов до операции в г/л.\n'
+        'TrHb – гемоглобин перелитой трансфузионной среды.\n'
+        'postHb – концентрация гемоглобина в крови через 24 часа после операции в г/л.\n'
+        'Vtr – объем трансфузии в л.\n'
+        'k2 – гематокрит трансфузионной среды.\n'
+        '(У эритроцитарной массы гематокрит составляет 0,7,n' 
+        'у эритроцитарной взвеси – 0,6, размороженные отмытые эритроциты – 0,5).\n'
+        'preHct – гематокрит крови за 6-12 часов до операции в %.\n'
+        'postHct – гематокрит крови через 24 часа после операции в %.\n'
+    )
+    Message(doc_window, text=doc).grid(row=0, sticky=W)
+    doc_window.mainloop()
+
+# Кнопки главного окна.
+but = Button(window, text='   Рассчитать V   ', bg=color_v, command=get_volume)
+but.grid(row=10, column=0, sticky=W)
 
 but = Button(window, text='Рассчитать TrHb', bg=color_trhb, command=open_TrHb)
 but.grid(row=3, column=2, sticky=W)
@@ -171,7 +167,7 @@ but.grid(row=3, column=2, sticky=W)
 but = Button(window, text='  Очистить  ', command=clean)
 but.grid(row=10, column=1, sticky=E)
 
-but = Button(window, text='doc', command=open_TrHb)
+but = Button(window, text='doc', command=doc)
 but.grid(row=10, column=2, sticky=W)
 
 
