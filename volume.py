@@ -9,19 +9,20 @@ import math
 #Главное окно.
 window = Tk()
 window.title('V - Калькулятор')
+window.iconbitmap('icons/blood_drop2.ico')
 mycolor = '#%02x%02x%02x' % (199, 199, 199)
 color_v = '#%02x%02x%02x' % (200, 66, 69)
 color_v_foc = '#%02x%02x%02x' % (236, 78, 83)
 color_trhb = '#%02x%02x%02x' % (85, 170, 255)
 
 # Парамет sticky  означает выравнивание. W, E,N,S — запад, восток, север, юг.
-Label(window, text='m =').grid(row=0, sticky=E)
-Label(window, text='k1 =').grid(row=1, sticky=E)
-Label(window, text='preHb =').grid(row=2, sticky=E)
-Label(window, text='TrHb =').grid(row=3, sticky=E)
-Label(window, text='postHb =').grid(row=4, sticky=E)
-Label(window, text='preHct =').grid(row=5, sticky=E)
-Label(window, text='postHct =').grid(row=6, sticky=E)
+Label(window, text='m(кг.) =', font='Arial 14').grid(row=0, sticky=E)
+Label(window, text='k1(мл.) =', font='Arial 14').grid(row=1, sticky=E)
+Label(window, text='preHb(г/л.) =', font='Arial 14').grid(row=2, sticky=E)
+Label(window, text='TrHb(г/л.) =', font='Arial 14').grid(row=3, sticky=E)
+Label(window, text='postHb(г/л.) =', font='Arial 14').grid(row=4, sticky=E)
+Label(window, text='preHct(%) =', font='Arial 14').grid(row=5, sticky=E)
+Label(window, text='postHct(%) =', font='Arial 14').grid(row=6, sticky=E)
 
 # Виджеты текстовых полей.
 Entry_m = Entry(window, width=10, font='Arial 16', bg=mycolor)
@@ -31,7 +32,7 @@ Entry_TrHb = Entry(window, width=10, font='Arial 16', bg=mycolor)
 Entry_postHb = Entry(window, width=10, font='Arial 16', bg=mycolor)
 Entry_preHct = Entry(window, width=10, font='Arial 16', bg=mycolor)
 Entry_postHct = Entry(window, width=10, font='Arial 16', bg=mycolor)
-EntryRes = Entry(window, width=20, font='Arial 16', bg=mycolor)
+EntryRes = Entry(window, width=25, font='Arial 16', bg=mycolor)
 
 # Выравнивание по сетке.
 Entry_m.grid(row=0, column=1, sticky=E)
@@ -63,13 +64,14 @@ def get_volume():
 def open_TrHb():
     TrHb_window = Toplevel(window)
     TrHb_window.title('TrHb')
+    TrHb_window.iconbitmap('icons/transfusion2.ico')
     
-    Label(TrHb_window, text='Vtr =').grid(row=0, sticky=E)
-    Label(TrHb_window, text='k2 =').grid(row=1, sticky=E)
-    Label(TrHb_window, text='m =').grid(row=2, sticky=E)
-    Label(TrHb_window, text='k1 =').grid(row=3, sticky=E)
-    Label(TrHb_window, text='preHct =').grid(row=4, sticky=E)
-    Label(TrHb_window, text='postHct =').grid(row=5, sticky=E)
+    Label(TrHb_window, text='Vtr(мл.) =', font='Arial 14').grid(row=0, sticky=E)
+    Label(TrHb_window, text='k2 =', font='Arial 14').grid(row=1, sticky=E)
+    Label(TrHb_window, text='m(кг.) =', font='Arial 14').grid(row=2, sticky=E)
+    Label(TrHb_window, text='k1(мл.) =', font='Arial 14').grid(row=3, sticky=E)
+    Label(TrHb_window, text='preHct(%) =', font='Arial 14').grid(row=4, sticky=E)
+    Label(TrHb_window, text='postHct(%) =', font='Arial 14').grid(row=5, sticky=E)
 
     Entry_Vtr = Entry(TrHb_window, width=10, font='Arial 16', bg=mycolor)
     Entry_k2 = Entry(TrHb_window, width=10, font='Arial 16', bg=mycolor)
@@ -77,7 +79,7 @@ def open_TrHb():
     Entry_k1 = Entry(TrHb_window, width=10, font='Arial 16', bg=mycolor)
     Entry_preHct = Entry(TrHb_window, width=10, font='Arial 16', bg=mycolor)
     Entry_postHct = Entry(TrHb_window, width=10, font='Arial 16', bg=mycolor)
-    EntryResTrHb = Entry(TrHb_window, width=20, font='Arial 16', bg=mycolor)
+    EntryResTrHb = Entry(TrHb_window, width=23, font='Arial 16', bg=mycolor)
 
     Entry_Vtr.grid(row=0, column=1, sticky=E)
     Entry_k2.grid(row=1, column=1, sticky=E)
@@ -99,7 +101,7 @@ def open_TrHb():
         preHct = float(Entry_preHct.get()) 
         postHct = float(Entry_postHct.get()) 
         
-        result_TrHb = round((Vtr * AVER_HB * k2) / (m * KML * k1 * math.sqrt(preHct / postHct)), 1)
+        result_TrHb = round(((Vtr * KML) * AVER_HB * k2) / (m * KML * k1 * math.sqrt(preHct / postHct)), 1)
 
         EntryResTrHb.delete(0, END)
         EntryResTrHb.insert(0, result_TrHb)
@@ -113,10 +115,10 @@ def open_TrHb():
             Entry_preHct.delete(0, END)
             Entry_postHct.delete(0, END)    
 
-    but = Button(TrHb_window, text='  Рассчитать TrHb  ',  bg=color_trhb, command=get_TrHb)
+    but = Button(TrHb_window, text='Рассчитать TrHb', font='Arial 11 bold',  bg=color_trhb, command=get_TrHb)
     but.grid(row=9, column=0, sticky=W)
 
-    but = Button(TrHb_window, text='   Очистить   ', command=clean_TrHb)
+    but = Button(TrHb_window, text='Очистить', font='Arial 10', command=clean_TrHb)
     but.grid(row=9, column=1, sticky=E)
 
     TrHb_window.mainloop()
@@ -133,6 +135,7 @@ def clean():
 def doc():
     doc_window = Toplevel(window)
     doc_window.title('Документация')
+    doc_window.iconbitmap('icons/info_information.ico')
     doc_window.geometry('500x300')
     doc = (
         'V – объем интраоперационной кровопотери в мл.\n'
@@ -158,16 +161,16 @@ def doc():
     doc_window.mainloop()
 
 # Кнопки главного окна.
-but = Button(window, text='   Рассчитать V   ', bg=color_v, command=get_volume)
+but = Button(window, text='Рассчитать V (мл.)', font='Arial 11 bold', bg=color_v, command=get_volume)
 but.grid(row=10, column=0, sticky=W)
 
-but = Button(window, text='Рассчитать TrHb', bg=color_trhb, command=open_TrHb)
+but = Button(window, text='Рассчитать TrHb', font='Arial 10 bold', bg=color_trhb, command=open_TrHb)
 but.grid(row=3, column=2, sticky=W)
 
-but = Button(window, text='  Очистить  ', command=clean)
+but = Button(window, text='Очистить', font='Arial 10', command=clean)
 but.grid(row=10, column=1, sticky=E)
 
-but = Button(window, text='doc', command=doc)
+but = Button(window, text='doc', font='Arial 10', command=doc)
 but.grid(row=10, column=2, sticky=W)
 
 
