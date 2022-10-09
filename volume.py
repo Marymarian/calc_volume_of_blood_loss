@@ -9,7 +9,6 @@ import math
 #Главное окно.
 window = Tk()
 window.title('V - Калькулятор')
-window.iconbitmap('icons/blood_drop2.ico')
 mycolor = '#%02x%02x%02x' % (199, 199, 199)
 color_v = '#%02x%02x%02x' % (200, 66, 69)
 color_v_foc = '#%02x%02x%02x' % (236, 78, 83)
@@ -64,7 +63,7 @@ def get_volume():
 def open_TrHb():
     TrHb_window = Toplevel(window)
     TrHb_window.title('TrHb')
-    TrHb_window.iconbitmap('icons/transfusion2.ico')
+    # TrHb_window.iconbitmap('icons/transfusion2.ico')
     
     Label(TrHb_window, text='Vtr(мл.) =', font='Arial 14').grid(row=0, sticky=E)
     Label(TrHb_window, text='k2 =', font='Arial 14').grid(row=1, sticky=E)
@@ -135,29 +134,61 @@ def clean():
 def doc():
     doc_window = Toplevel(window)
     doc_window.title('Документация')
-    doc_window.iconbitmap('icons/info_information.ico')
-    doc_window.geometry('500x300')
-    doc = (
-        'V – объем интраоперационной кровопотери в мл.\n'
-        'm – масса тела в кг.\n'
-        'k1 – коэффициент, соответствующий правилу Гилчера.\n'
-        '(у атлетичных мужчин на 1 килограмм веса приходится 75 мл крови,\n' 
-        'у нормостеничных – 70 мл, у астеничных – 65 мл, у мужчин с ожирением – 60 мл.\n' 
-        'У женщин используются несколько другие данные:\n'
-        'при атлетичном телосложении – 70 мл на килограмм веса,\n'
-        'при нормостеничном – 65 мл,\n'
-        'у астеничных – 60 мл, у женщин с ожирением – 55 мл).\n'
-        'preHb – концентрация гемоглобина в крови за 6-12 часов до операции в г/л.\n'
-        'TrHb – гемоглобин перелитой трансфузионной среды.\n'
-        'postHb – концентрация гемоглобина в крови через 24 часа после операции в г/л.\n'
-        'Vtr – объем трансфузии в л.\n'
-        'k2 – гематокрит трансфузионной среды.\n'
-        '(У эритроцитарной массы гематокрит составляет 0,7,n' 
-        'у эритроцитарной взвеси – 0,6, размороженные отмытые эритроциты – 0,5).\n'
-        'preHct – гематокрит крови за 6-12 часов до операции в %.\n'
-        'postHct – гематокрит крови через 24 часа после операции в %.\n'
-    )
-    Message(doc_window, text=doc).grid(row=0, sticky=W)
+    # doc_window.iconbitmap('icons/info_information.ico')
+    doc_window.geometry('280x450')
+    Label( doc_window, text='V', font='Arial 8 bold').grid(row=0, column=0, sticky=N)
+    Label( doc_window, text='- Объем интраоперационной кровопотери.', font='Arial 8').grid(row=0, column=1, sticky=W)
+    Label( doc_window, text='m', font='Arial 8 bold').grid(row=1, column=0, sticky=N)
+    Label( doc_window, text='- Масса тела.', font='Arial 8').grid(row=1, column=1, sticky=W)
+    Label( doc_window, text='k1', font='Arial 8 bold').grid(row=2, column=0, sticky=N)
+    Label( doc_window, text=(
+        '- Правило Гилчера (у атлетичных мужчин \n'
+        'на 1 килограмм веса приходится\n'
+        '75 мл. крови, у нормостеничных - 70 мл.,\n'
+        'у астеничных – 65 мл., у мужчин\n'
+        'с ожирением – 60 мл. У атлетичных\n'
+        'женщин 70 мл., нормостеничных – 65 мл.,\n'
+        'астеничных – 60 мл., у женщин\n'
+        'с ожирением - 55 мл.'
+    ), justify=LEFT, font='Arial 8').grid(row=2, column=1, sticky=W)
+    Label( doc_window, text='preHb', font='Arial 8 bold').grid(row=3, column=0, sticky=N)
+    Label( doc_window, text=(
+        '- Концентрация гемоглобина в крови\n'
+        'за 6-12 часов до операции.'
+    ), justify=LEFT, font='Arial 8').grid(row=3, column=1, sticky=W)
+    Label( doc_window, text='TrHb', font='Arial 8 bold').grid(row=4, column=0, sticky=N)
+    Label( doc_window, text=(
+        '- Гемоглобин перелитой\n'
+        'трансфузионной среды.'
+    ), justify=LEFT, font='Arial 8').grid(row=4, column=1, sticky=W)
+    Label( doc_window, text='postHb', font='Arial 8 bold').grid(row=5, column=0, sticky=N)
+    Label( doc_window, text=(
+        '- Концентрация гемоглобина в крови\n'
+        'через 24 часа после операции.'
+    ), justify=LEFT, font='Arial 8').grid(row=5, column=1, sticky=W)
+    Label( doc_window, text='Vtr', font='Arial 8 bold').grid(row=6, column=0, sticky=N)
+    Label( doc_window, text=(
+        '- Объем трансфузии.'
+    ), justify=LEFT, font='Arial 8').grid(row=6, column=1, sticky=W)
+    Label( doc_window, text='k2', font='Arial 8 bold').grid(row=7, column=0, sticky=N)
+    Label( doc_window, text=(
+        '- Гематокрит трансфузионной среды.\n'
+        '(Гематокрит эритроцитарной массы\n'
+        '- 0.7; эритроцитарной взвеси - 0.6;\n'
+        'размороженных отмытых\n'
+        'эритроцитов - 0.5.\n'
+    ), justify=LEFT, font='Arial 8').grid(row=7, column=1, sticky=W)
+    Label( doc_window, text='preHct', font='Arial 8 bold').grid(row=8, column=0, sticky=N)
+    Label( doc_window, text=(
+        '- Гематокрит крови за 6-12 часов\n'
+        'до операции.'
+    ), justify=LEFT, font='Arial 8').grid(row=8, column=1, sticky=W)
+    Label( doc_window, text='postHct', font='Arial 8 bold').grid(row=9, column=0, sticky=N)
+    Label( doc_window, text=(
+        '- Гематокрит крови через 24 часа\n'
+        'после операции.'
+    ), justify=LEFT, font='Arial 8').grid(row=9, column=1, sticky=W)
+    #Message(doc_window, width=25, text=doc).grid(row=0, columnspan=1, sticky=E)
     doc_window.mainloop()
 
 # Кнопки главного окна.
