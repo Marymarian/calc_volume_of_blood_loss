@@ -19,7 +19,6 @@ Python
 - [@Marymarian](https://www.github.com/Marymarian)
 
 ## Демо
-### Проект был развернут на удаленном сервере | YandexCloud
 ### Расчет TrHb трансфузионного гемоглобина
 ![](https://github.com/Marymarian/calc_volume_of_blood_loss/blob/main/calcTrHb.gif) 
 ### Расчет V кровопотери
